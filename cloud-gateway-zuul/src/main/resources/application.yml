@@ -1,0 +1,155 @@
+server:
+  port: 9999
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  tomcat:
+    remoteip:
+      port-header: x-forwared-for
+      protocol-header: x-forwarded-proto
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: gateway-server
+  main:
+    allow-bean-definition-overriding: true
+
+  output:
+    ansi:
+      enabled: detect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,env
+
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types:
+        - text/xml
+        - application/xml
+        - application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+  hystrix:
+    enabled: true
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+#    preferIpAddress: true
+eureka:
+  client:
+    enabled: true
+    service-url:
+      default-zone: http://127.0.0.1:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+    preferIpAddress: true
+
+zuul:
+  add-host-header: true
+  ignoredServices:
+  retryable: true
+  routes:
+    ORDER-SERVER:
+      path: /order/**
+      stripPrefix: false
+    UAA-SERVER:
+      path: /uaa/**
+      stripPrefix: false
+  sensitiveHeaders:
+
+#logging:
+#  level:
+#    org:
+#      springframework: info
+#    root: info
+
+ribbon:
+  ConnectTimeout: 250 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 2 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
+
+
+
+
+
+
+
+#server:
+#  port: 9999
+#  servlet:
+#    encoding:
+#      enabled: true
+#      charset: UTF-8
+#      force: true
+#  tomcat:
+#    remoteip:
+#      port-header: x-forwared-for
+#      protocol-header: x-forwarded-proto
+#  forward-headers-strategy: framework
+#
+#spring:
+#  application:
+#    name: GATEWAY-ZUUL
+#  output:
+#    ansi:
+#      enabled: detect
+#  main:
+#    allow-bean-definition-overriding: true
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh,health,info,env
+#
+#eureka:
+#  client:
+#    enabled: true
+#    service-url:
+#      default-zone: http://127.0.0.1:8761/eureka/
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+#    preferIpAddress: true
+#
+#feign:
+#  hystrix:
+#    enabled: true
+#  compression:
+#    request:
+#      enabled: true
+#      mime-types:
+#        - text/xml
+#        - application/xml
+#        - application/json
+#      min-request-size: 2048
+#    response:
+#      enabled: true
+#
+#zuul:
+#  retryable: true
+#  add-host-header: true
+#  routes:
+#    UAA-SERVER:
+#      stripPrefix: false
+#      path: /uaa/**
+#    ORDER-SERVER:
+#       stripPrefix: false
+#       path: /order/**
+#    ignoredServices:
+#    sensitiveHeaders:
+#

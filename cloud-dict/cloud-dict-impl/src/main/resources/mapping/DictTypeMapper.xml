@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.anibaba.dict.mapper.DictTypeMapper">
+
+    <select id="search" parameterType="com.anibaba.dict.model.DictType$Criteria"
+            resultType="com.anibaba.dict.model.DictType">
+        select * from tb_dict_type where 1 = 1
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <choose>
+            <when test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </when>
+            <otherwise>
+                and 2 = 2
+            </otherwise>
+        </choose>
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+    </select>
+
+    <insert id="create" parameterType="com.anibaba.dict.model.DictType">
+        insert into tb_dict_type (id, name, code, create_time, update_time)
+        values (#{id,jdbcType}, #{name,jdbcType}, #{code,jdbcType}, #{createTime}, #{updateTime});
+    </insert>
+
+</mapper>

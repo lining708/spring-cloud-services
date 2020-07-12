@@ -1,0 +1,36 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /order
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+  tomcat:
+    remoteip:
+      port-header: x-forwared-for
+      protocol-header: x-forwarded-proto
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: ORDER-SERVER
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/user-service
+    username: root
+    password: root
+  output:
+    ansi:
+      enabled: detect
+
+
+#eureka:
+#  client:
+#    enabled: true
+#    service-url:
+#      default-zone: http://127.0.0.1:8761/eureka/
+feign:
+  hystrix:
+    enabled: true

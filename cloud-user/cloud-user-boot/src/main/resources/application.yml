@@ -1,0 +1,49 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /user
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  tomcat:
+    remoteip:
+      port-header: x-forwared-for
+      protocol-header: x-forwarded-proto
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: CLOUD-USER
+
+  #    数据库方面
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db_users
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  output:
+    ansi:
+      enabled: detect
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  client:
+    enabled: true
+    service-url:
+      default-zone: http://127.0.0.1:8761/eureka/
+feign:
+  hystrix:
+    enabled: true
+
+# 设置输出级别 TARCE < DEBUG < INFO < WARN < ERROR < FATAL
+#logging:
+#  level:
+#    root: info
+#    .org.springframework*.*: debug
